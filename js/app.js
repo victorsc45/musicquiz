@@ -1,17 +1,17 @@
 $(document).ready(function(){
-	$(".new").click(function() {
-    location.reload(true);
-});
+	
+	
 	var i = 0;
 	var x = true;
 	var q = true;
 	var counter = 0;
 	var final = 0;
-	var numOfQuestions;
+	var rock = true;
 	var question;
 	var answer;
 	var chooseItem = [];
 	var scoreTotal = 0;
+	$(".rock").hide();
 	$("#game-form").hide();
 	$(".top").hide();
 	$("#start-button").on("click",function(){ 
@@ -20,22 +20,30 @@ $(document).ready(function(){
     $("input[name='r1']").show();
    	$(".top").show();
    	$("#next").attr('disabled', true);
-   	$(".new").attr('disabled', true);
+   	$(".new").hide();
+   	$(".rock").show();
    	musicQuiz(i);
 	
 })
-	$(".top").mouseenter(function(){
+
+	$(".rock").click(function (event){
+         event.preventDefault();
+
+		if(rock == true){
+			
   	$("#rock-sound")[0].volume = 0.5;
     $("#rock-sound")[0].load();
     $("#rock-sound")[0].play();
-    $( this ).find( ".line-1" ).text("music by:Rockefeller Horsecollar");
-    $(this).find(".line-2").text("Move cursor out of the banner to pause music.");
+    $( ".line-1" ).text("music by:Rockefeller Horsecollar");
+    rock = false;
+}else{
+	$("#rock-sound")[0].pause();
+ 	 $( ".line-1" ).text(" ");
+ 	rock = true;   
+}
 })
-   $(".top").mouseleave(function(){
-       $("#rock-sound")[0].pause();
-       $( this ).find( ".line-1" ).text( " " );
-       $( this ).find( ".line-2" ).text( " " );
-})  
+
+
 	
    function musicQuiz(i){
    	
@@ -269,6 +277,7 @@ loadQandA(questions, i);
  }	
  	
 function endGame(){
+	$(".new").show();
 	$(".new").attr('disabled', false);
 	$("input[name='r1']").attr('disabled',false);
 	$("#a1").html(" ");   
@@ -284,7 +293,11 @@ function endGame(){
 		$(".quiz-check").attr('disabled', true);
 		$("#final").html("The final score is..." + " "+ final + "%");
 		$("#result").html("Click...Play Again! for another round!");
-	$("input[name='r1']").hide();	
+	$("input[name='r1']").hide();
+$(".new").click(function (event){
+         event.preventDefault();
+    	location.reload(true);
+});
 		
 }	
 					
